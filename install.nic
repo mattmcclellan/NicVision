@@ -1,0 +1,29 @@
+#!/bin/bash
+nicVision_install() {
+	sudo apt-get install motion vlc vl4* streamer python-pip git filezilla samba
+	sudo git clone https://github.com/sightmachine/SimpleCV.git
+	cd ~/SimpleCV
+	sudo python setup.py build
+	sudo python setup.py install
+	cd ~/SimpleCV/scripts/install/ubuntu
+	./simplecv-install.sh
+	sudo apt-get update
+	sudo apt-get upgrade
+	sudo apt-get remove v4l2loopback
+	cd ~/
+	sudo mkdir .NicVision
+	cd .NicVision
+	sudo git clone https://github.com/mattmcclellan/NicVision.git ~./NicVision
+	echo "System will now restart..."
+	sudo shutdown -r 0
+}
+echo "SimianTech IT Services"
+echo "STCustoms' 'Nicole' (NicVision)"
+echo "******************************"
+read -p "System will restart on completion! Press 'y' to install...": yesno
+if [ $yesno = y ]
+	then echo "Executing installer..."
+	nicVision_install;
+else echo "Canceling..."
+	exit()
+fi
